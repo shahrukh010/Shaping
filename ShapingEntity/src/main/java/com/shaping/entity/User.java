@@ -1,10 +1,16 @@
 package com.shaping.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,7 +18,7 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(name = "first_name", length = 30, nullable = false)
@@ -27,7 +33,13 @@ public class User {
 	@Column(length = 100)
 	private String password;
 
-	private String image;
+	private String photo;
+
+	private boolean enabled;
+
+	@ManyToMany
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> role = new HashSet<Role>();
 
 	public User() {
 	}
@@ -76,14 +88,33 @@ public class User {
 		this.password = password;
 	}
 
-	public String getImage() {
-		return image;
-		
-		
+	public String getPhoto() {
+		return photo;
+
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setPhoto(String image) {
+		this.photo = photo;
 	}
-	
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(Set<Role> role) {
+		this.role = role;
+	}
+
+	public void addRole(Role role) {
+
+		this.role.add(role);
+	}
 }
