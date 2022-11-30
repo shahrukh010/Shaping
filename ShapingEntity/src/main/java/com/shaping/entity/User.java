@@ -78,6 +78,8 @@ public class User {
 
 	public String getImage() {
 		return image;
+		
+		
 	}
 
 	public void setImage(String image) {
