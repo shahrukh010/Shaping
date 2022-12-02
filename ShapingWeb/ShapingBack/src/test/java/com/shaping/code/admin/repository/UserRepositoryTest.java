@@ -27,8 +27,7 @@ public class UserRepositoryTest {
 
 	@Autowired
 	private EntityManager entityManager;
-	
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -117,29 +116,26 @@ public class UserRepositoryTest {
 		userJuli.addRole(roleEditor);
 		userRepo.save(userJuli);
 	}
-	
-	
+
 	@Test
 	public void removeUser() {
-		
-		//
-		userRepo.deleteById(20l);
+
+		/*
+		 */
+		userRepo.deleteById(11l);
 	}
-	
+
 	@Test
 	public void createPasswordEncoder() {
-		
-		final String  ROW_PASSWORD = "annieHector";
-		
-	    final String CYPHER = passwordEncoder.encode(ROW_PASSWORD);
 
-	    boolean match = passwordEncoder.matches(ROW_PASSWORD, CYPHER);
-	    System.out.println(match);
+		final String ROW_PASSWORD = "annieHector";
 
-		
+		final String CYPHER = passwordEncoder.encode(ROW_PASSWORD);
+
+		boolean match = passwordEncoder.matches(ROW_PASSWORD, CYPHER);
+		System.out.println(match);
+
 	}
-	
-	
-	
+
 
 }

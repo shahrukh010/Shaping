@@ -43,5 +43,18 @@ public class UserService {
 		String rowPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(rowPassword);
 	}
+	
+	
+	
+	public boolean isEmailUnique(String email)throws UserException {
+		
+		User user = userRepo.findByEmail(email);
+		
+		if(user!=null) {
+			
+			throw new UserException("the email address is already associated with another Account");
+		}
+		return true;
+	}
 
 }

@@ -27,7 +27,7 @@ public class User {
 	@Column(name = "last_name", length = 30, nullable = false)
 	private String lastName;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	@Column(length = 100)
@@ -123,5 +123,5 @@ public class User {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", photo=" + photo + ", enabled=" + enabled + ", role=" + role + "]";
 	}
-	
+
 }
