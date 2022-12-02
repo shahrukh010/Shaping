@@ -1,12 +1,13 @@
 package com.shaping.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "roles")
@@ -40,6 +41,78 @@ public class Role {
 		this.description = description;
 	}
 
+//****************************************************************************************************
+
+	/**
+	 * Why do We need Equals and hashcode for Role? I understand the concept of
+	 * equal and hashcode completely but We are using Set<Role> in User class which
+	 * itself is unique and make sure it doesnt have two same object. So to test
+	 * this here what I did.
+	 * 
+	 * User userKunjan = new User("kunjan@gmail.com","kkapadia","Kunjan","Kapadia");
+	 * 
+	 * Role roleEditor = new Role(3);
+	 * 
+	 * Role roleAssistant = new Role(5);
+	 * 
+	 * 
+	 * 
+	 * userKunjan.addRole(roleEditor);
+	 * 
+	 * userKunjan.addRole(roleAssistant);
+	 * 
+	 * userKunjan.addRole(roleAssistant);
+	 * 
+	 * 
+	 * 
+	 * User savedUser = repo.save(userKunjan);
+	 * 
+	 * 
+	 * 
+	 * assertThat(savedUser.getId()).isGreaterThan(0);
+	 * 
+	 * 
+	 * 
+	 * I run this code to check in DB and DB has assigned two role only to this user
+	 * even though I have duplicated roleAssistant on User object.
+	 * 
+	 * 
+	 * 
+	 * Can you please explain the use case when I need equal and hashcode on Role
+	 * Object?
+	 * 
+	 * 
+	 * ans: You don't see the difference because you add the same object reference
+	 * roleAssistant, which the last one will be ignored.
+	 * 
+	 * Try this code:
+	 * 
+	 * Role roleEditor = new Role(3); Role roleAssistant1 = new Role(5); Role
+	 * roleAssistant2 = new Role(5);
+	 * 
+	 * userKunjan.addRole(roleEditor); userKunjan.addRole(roleAssistant1);
+	 * userKunjan.addRole(roleAssistant2);
+	 */
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Role other = (Role) obj;
+		return Objects.equals(id, other.id);
+	}
+
+//****************************************************************************************************
+
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +136,5 @@ public class Role {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 
 }

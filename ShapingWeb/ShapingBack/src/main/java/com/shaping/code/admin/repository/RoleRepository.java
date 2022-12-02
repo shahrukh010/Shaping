@@ -1,4 +1,4 @@
-package com.shaping.code.admin.user;
+package com.shaping.code.admin.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
