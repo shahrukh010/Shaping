@@ -9,6 +9,8 @@ import com.shaping.entity.User;
 public interface UserRepository extends CrudRepository<User,Long>{
 
 	
+
+	//JPA Query
 	@Query("Select u from User u where u.email=:email")
 	public User findByEmail(@Param("email") String email);
 }

@@ -18,8 +18,7 @@ public class UserService {
 //****************************************************************************************************
 
 	/*
-	 *  it is interface its class 
-	 *  implementation is BcryptPasswordEncoder
+	 * it is interface its class implementation is BcryptPasswordEncoder
 	 */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -32,7 +31,7 @@ public class UserService {
 		return listUsers;
 	}
 
-	public User saveUser(User user) {
+	public User saveUser(User user)  {
 
 		passwordEncoder(user);
 		return userRepo.save(user);
@@ -43,18 +42,21 @@ public class UserService {
 		String rowPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(rowPassword);
 	}
-	
-	
-	
-	public boolean isEmailUnique(String email)throws UserException {
-		
+
+	public boolean isEmailUnique(String email) throws UserException {
+
 		User user = userRepo.findByEmail(email);
-		
-		if(user!=null) {
-			
+
+		if (user != null) {
+
 			throw new UserException("the email address is already associated with another Account");
 		}
 		return true;
+	}
+
+	public User get(long id) {
+
+		return userRepo.findById(id).get();
 	}
 
 }
