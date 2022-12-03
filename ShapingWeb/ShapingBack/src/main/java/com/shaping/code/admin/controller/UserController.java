@@ -30,12 +30,11 @@ public class UserController {
 	private UserRestController userRest;
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestParam("image") MultipartFile fileUpload)
+	public ResponseEntity<User> saveUser(@RequestBody User user, @RequestParam("image") MultipartFile fileUpload)
 			throws UserException {
 
 		System.out.println(fileUpload.getOriginalFilename());
-		return null;
-//		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
+		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
 
 	}
 
