@@ -3,6 +3,7 @@ package com.shaping.code.admin.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class UserService {
 		return listUsers;
 	}
 
-	public User saveUser(User user)  {
+	public User saveUser(User user) {
 
 		passwordEncoder(user);
 		return userRepo.save(user);
@@ -57,6 +58,18 @@ public class UserService {
 	public User get(long id) {
 
 		return userRepo.findById(id).get();
+	}
+
+	public String removeById(long id) throws UserNotFoundException {
+
+		Long flag = userRepo.countById(id);
+		if (flag == null || flag == 0) {
+
+			throw new UserNotFoundException("Given user " + id + " not exists");
+		} else {
+			userRepo.deleteById(id);
+		}
+		return "removed user:" + id;
 	}
 
 }

@@ -33,12 +33,12 @@ public class User {
 	@Column(length = 100)
 	private String password;
 
-	private String photo;
+	private String photos;
 
 	private boolean enabled;
 
 	@ManyToMany
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> role = new HashSet<Role>();
 
 	public User() {
@@ -89,12 +89,12 @@ public class User {
 	}
 
 	public String getPhoto() {
-		return photo;
+		return photos;
 
 	}
 
 	public void setPhoto(String image) {
-		this.photo = photo;
+		this.photos = photos;
 	}
 
 	public boolean isEnabled() {
@@ -121,7 +121,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", photo=" + photo + ", enabled=" + enabled + ", role=" + role + "]";
+				+ ", password=" + password + ", photo=" + photos + ", enabled=" + enabled + ", role=" + role + "]";
 	}
 
 }

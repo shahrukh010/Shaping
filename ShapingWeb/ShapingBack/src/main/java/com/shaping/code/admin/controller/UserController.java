@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shaping.code.admin.service.UserException;
+import com.shaping.code.admin.service.UserNotFoundException;
 import com.shaping.code.admin.service.UserService;
 import com.shaping.entity.User;
 
@@ -28,9 +30,12 @@ public class UserController {
 	private UserRestController userRest;
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestBody User user) throws UserException {
+	public ResponseEntity<User> saveUser(@RequestParam("image") MultipartFile fileUpload)
+			throws UserException {
 
-		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
+		System.out.println(fileUpload.getOriginalFilename());
+		return null;
+//		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
 
 	}
 
@@ -46,10 +51,33 @@ public class UserController {
 		return new ResponseEntity<User>(userService.get(id), HttpStatus.OK);
 	}
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
+	/**
+	 * 
+	 * use mvc and send updateUser response to client for view users data and client
+	 * according to their need update and send request to save.
+	 */
+	@GetMapping("/edit/{id}")
+	public ResponseEntity<User> updateUser(@PathVariable(name = "id") long id) {
 
-		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
+		return new ResponseEntity<User>(userService.get(id), HttpStatus.CREATED);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<User> findById(@PathVariable(name = "id") long id) {
+
+		return new ResponseEntity<User>(userService.get(id), HttpStatus.OK);
+	}
+
+	@GetMapping("/delete/{id}")
+	public ResponseEntity<Object> removeById(@PathVariable(name = "id") long id) {
+
+		try {
+
+			return new ResponseEntity<Object>(userService.removeById(id), HttpStatus.OK);
+		} catch (UserNotFoundException ex) {
+
+			return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
