@@ -12,6 +12,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 
 public class S3Util {
 
+	//aws bucket name
 	private static final String BUCKET_NAME = "shaping-aws-s3";
 
 	public static void uploadFile(String fileName, InputStream inputStream) throws S3Exception, AwsServiceException, SdkClientException, IOException {
