@@ -7,16 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.shaping.code.admin.FileUtil;
-import com.shaping.code.admin.S3Util;
 import com.shaping.code.admin.service.UserException;
 import com.shaping.code.admin.service.UserNotFoundException;
 import com.shaping.code.admin.service.UserService;
@@ -33,21 +31,20 @@ public class UserController {
 	private UserRestController userRest;
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(User users, @RequestParam("file") MultipartFile multipartFile)
+	public ResponseEntity<User> saveUser(@RequestBody User user,@RequestParam("file")MultipartFile multipartFile)
 			throws UserException, IOException {
-		System.out.println(multipartFile.getOriginalFilename());
+//		System.out.println(multipartFile.getOriginalFilename());
 
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String uploadDir = "user-photo";
 
 		//FileUtil.uploadFile(uploadDir, fileName, multipartFile);
 //		S3Util.uploadFile(fileName, multipartFile.getInputStream());
-		FileUtil.uploadFile(uploadDir, fileName, multipartFile);
+//		FileUtil.uploadFile(uploadDir, fileName, multipartFile);
 
-//		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
-		return null;
-
+		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
 	}
+	
 
 	@GetMapping("/list")
 	public ResponseEntity<List<User>> listAllUsers() {
