@@ -9,15 +9,20 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.shaping</groupId>
-	<artifactId>ShapingBack</artifactId>
+	<artifactId>ShapingFrontEnd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ShapingBack</name>
-	<description> Shaping Admin spring project</description>
+	<name>ShapingFrontEnd</name>
+	<description>Shaping Web Application</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-	<dependencies>
 
-
-	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -20,8 +20,8 @@
 		<java.version>17</java.version>
 	</properties>
 	<modules>
-		<module>ShapingBack</module>
-		<module>ShapingFront</module>
+		<module>ShapingBackEnd</module>
+		<module>ShapingFrontEnd</module>
 	</modules>
 	<dependencies>
 		<dependency>
