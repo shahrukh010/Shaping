@@ -71,5 +71,13 @@ public class UserService {
 		}
 		return "removed user:" + id;
 	}
+	
+	
+	public String updateUserStatus(long id,boolean status) {
+		
+
+		userRepo.updateUserStatus(id, status);
+		return status==false ? "user enabled":"user disabled";
+	}
 
 }

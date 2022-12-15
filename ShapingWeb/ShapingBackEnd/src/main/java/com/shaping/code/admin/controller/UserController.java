@@ -31,20 +31,19 @@ public class UserController {
 	private UserRestController userRest;
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestBody User user,@RequestParam("file")MultipartFile multipartFile)
+	public ResponseEntity<User> saveUser(@RequestBody User user, @RequestParam("file") MultipartFile multipartFile)
 			throws UserException, IOException {
 //		System.out.println(multipartFile.getOriginalFilename());
 
 //		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String uploadDir = "user-photo";
 
-		//FileUtil.uploadFile(uploadDir, fileName, multipartFile);
+		// FileUtil.uploadFile(uploadDir, fileName, multipartFile);
 //		S3Util.uploadFile(fileName, multipartFile.getInputStream());
 //		FileUtil.uploadFile(uploadDir, fileName, multipartFile);
 
 		return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
 	}
-	
 
 	@GetMapping("/list")
 	public ResponseEntity<List<User>> listAllUsers() {
@@ -87,4 +86,9 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/status/{id}")
+	public ResponseEntity<String> updateUserStatus(@PathVariable(name = "id")long id, boolean status) {
+
+		return new ResponseEntity<String>(userService.updateUserStatus(id, status),HttpStatus.OK);
+	}
 }
