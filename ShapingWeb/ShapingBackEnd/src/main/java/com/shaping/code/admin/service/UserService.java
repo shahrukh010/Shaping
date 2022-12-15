@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class UserService {
 
 //****************************************************************************************************
 
-	private final int DEFAULT_PAGE_SIZE = 2;
+	private final int DEFAULT_PAGE_SIZE = 4;
 
 	public List<User> listAllUsers() {
 
@@ -90,5 +91,17 @@ public class UserService {
 
 		List<User> user = listUser.getContent();
 		return user;
+	}
+	
+	public List<User>listByPageAndSort(int pageNo,String fieldName,String sortDir){
+		
+		Sort sort = Sort.by(fieldName).ascending();
+		Pageable pageable = PageRequest.of(pageNo, DEFAULT_PAGE_SIZE, sort);
+		
+		List<User>listUsers =  userRepo.findAll(pageable).getContent();
+		
+		return listUsers;
+				
+
 	}
 }

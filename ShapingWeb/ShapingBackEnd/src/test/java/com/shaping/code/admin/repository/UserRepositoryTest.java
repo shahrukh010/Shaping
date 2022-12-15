@@ -36,11 +36,11 @@ public class UserRepositoryTest {
 
 		Role role = entityManager.find(Role.class, 2l);
 		User user = new User();
-		user.setFirstName("Bridget");
+		user.setFirstName("Allen");
 		user.setLastName("Smith");
-		user.setEmail("bridgetsmith@gmail.com");
+		user.setEmail("allensmith@gmail.com");
 		user.setPassword("annieHector");
-		user.setEnabled(false);
+		user.setEnabled(true);
 		user.addRole(role);
 		User saveUser = this.userRepo.save(user);
 		assertThat(saveUser.getId()).isGreaterThan(0);

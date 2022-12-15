@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.shaping.code.admin.service.UserException;
 import com.shaping.code.admin.service.UserNotFoundException;
@@ -31,11 +28,9 @@ public class UserController {
 
 	@Autowired
 	private UserRestController userRest;
-	
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestBody User user)
-			throws UserException, IOException {
+	public ResponseEntity<User> saveUser(@RequestBody User user) throws UserException, IOException {
 //		System.out.println(multipartFile.getOriginalFilename());
 
 //		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -90,19 +85,23 @@ public class UserController {
 	}
 
 	@GetMapping("/status/{id}")
-	public ResponseEntity<String> updateUserStatus(@PathVariable(name = "id")long id, boolean status) {
+	public ResponseEntity<String> updateUserStatus(@PathVariable(name = "id") long id, boolean status) {
 
-		return new ResponseEntity<String>(userService.updateUserStatus(id, status),HttpStatus.OK);
+		return new ResponseEntity<String>(userService.updateUserStatus(id, status), HttpStatus.OK);
+	}
+
+	@GetMapping("/page/pageNo}")
+	public ResponseEntity<List<User>> listByPage(@PathVariable(name = "pageNo") int pageNo) {
+
+		return new ResponseEntity<List<User>>(userService.listByPage(pageNo), HttpStatus.OK);
 	}
 	
-	
-	@GetMapping("/page")
-	public ResponseEntity<List<User>>listByPage(int pageNo){
+	@GetMapping("/page/sort")
+	public ResponseEntity<List<User>>listByPageAndSort(
+	@RequestParam(value = "sortField")String sortField,@RequestParam(value = "sortDir")String sortDir){
 		
-		return new ResponseEntity<List<User>>(userService.listByPage(pageNo),HttpStatus.OK);
+		return new ResponseEntity<List<User>>(userService.listByPageAndSort(0, sortField, sortDir),HttpStatus.OK);
 	}
 	
-	
-	
-	
+
 }
