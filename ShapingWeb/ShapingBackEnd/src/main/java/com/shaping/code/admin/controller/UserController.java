@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,9 +31,10 @@ public class UserController {
 
 	@Autowired
 	private UserRestController userRest;
+	
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestBody User user, @RequestParam("file") MultipartFile multipartFile)
+	public ResponseEntity<User> saveUser(@RequestBody User user)
 			throws UserException, IOException {
 //		System.out.println(multipartFile.getOriginalFilename());
 
@@ -91,4 +94,15 @@ public class UserController {
 
 		return new ResponseEntity<String>(userService.updateUserStatus(id, status),HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/page")
+	public ResponseEntity<List<User>>listByPage(int pageNo){
+		
+		return new ResponseEntity<List<User>>(userService.listByPage(pageNo),HttpStatus.OK);
+	}
+	
+	
+	
+	
 }

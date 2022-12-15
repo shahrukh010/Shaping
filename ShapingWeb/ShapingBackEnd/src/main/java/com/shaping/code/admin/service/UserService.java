@@ -3,7 +3,9 @@ package com.shaping.code.admin.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
 //****************************************************************************************************
+
+	private final int DEFAULT_PAGE_SIZE = 2;
 
 	public List<User> listAllUsers() {
 
@@ -71,13 +75,20 @@ public class UserService {
 		}
 		return "removed user:" + id;
 	}
-	
-	
-	public String updateUserStatus(long id,boolean status) {
-		
+
+	public String updateUserStatus(long id, boolean status) {
 
 		userRepo.updateUserStatus(id, status);
-		return status==false ? "user disabled":"user enabled";
+		return status == false ? "user disabled" : "user enabled";
 	}
 
+	public List<User> listByPage(int pageNo) {
+
+		Pageable pageable = PageRequest.of(pageNo, DEFAULT_PAGE_SIZE);
+
+		Page<User> listUser = userRepo.findAll(pageable);
+
+		List<User> user = listUser.getContent();
+		return user;
+	}
 }
