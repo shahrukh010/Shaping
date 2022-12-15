@@ -21,7 +21,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	public Long countById(long id);
 	
 	
-	@Query("UPDATE User u SET u.enabled= ?2 WHERE u.id= ?1")
+	@Query("UPDATE User u SET u.enabled=?2 WHERE u.id=?1")
 	@Modifying
 	@Transactional//annotate with @Transactional otherwise it will give error
 	public void updateUserStatus(long id,boolean status);

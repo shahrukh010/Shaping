@@ -77,7 +77,7 @@ public class UserService {
 		
 
 		userRepo.updateUserStatus(id, status);
-		return status==false ? "user enabled":"user disabled";
+		return status==false ? "user disabled":"user enabled";
 	}
 
 }
